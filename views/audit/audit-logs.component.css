@@ -1,0 +1,20 @@
+[hidden] {
+    display: none !important;
+  }
+
+
+  .tab-wrapper {
+    overflow: inherit!important;
+}
+.multiselect-dropdown .dropdown-btn{
+  border:none!important
+}
+  .col-6-custom {
+    flex: 0 0 0 !important;
+    /* max-width: 50%; */
+}
+.input-group-btn button {
+  height: 38px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}

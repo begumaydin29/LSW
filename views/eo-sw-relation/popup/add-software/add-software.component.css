@@ -1,0 +1,15 @@
+.disabled-content {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  
+.modal-dialog {
+    margin: 2px auto;
+    z-index: 1100 !important;
+}
+
+
+.modal{
+    overflow-y: auto;
+}

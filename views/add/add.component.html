@@ -1,0 +1,46 @@
+<div class="page-content-wrapper {{ _pageContainerClass }}">
+  <!-- START PAGE CONTENT -->
+  <div class="content {{ _contentClass }}">
+    <div class="full-width" style="margin-top:-45px">
+      <div class="card card-transparent">
+        <pg-tabset Type="simple" ShowPagination="true" Animated="false">
+          <pg-tab
+            *ngFor="let tab of tabs; let index = index"
+            [class.active]="tab.active"
+          >
+            <ng-template #TabHeading>
+              {{ tab.headerText }}
+              <a (click)="selectTab(index)" style="padding: 5px;"
+                ><i class="fa fa-times fa-lg"></i
+              ></a>
+            </ng-template>
+            <div>
+              <div
+                class="row column-seperation"
+                *ngIf="tab.componentName === 'app-add-sw'"
+              >
+                <app-add-sw class="full-width"></app-add-sw>
+              </div>
+              <div
+                class="row column-seperation"
+                *ngIf="tab.componentName === 'app-add-hw'"
+              >
+                <app-add-hw class="full-width"></app-add-hw>
+              </div>
+
+              <div
+              class="row column-seperation"
+              *ngIf="tab.componentName === 'app-add-sl'"
+            >
+              <app-add-sl class="full-width"></app-add-sl>
+            </div>
+            </div>
+          </pg-tab>
+        </pg-tabset>
+      </div>
+    </div>
+    <!-- {{innerHtml}} -->
+    <router-outlet></router-outlet>
+  </div>
+  <!-- END PAGE CONTENT -->
+</div>

@@ -1,0 +1,99 @@
+<div class="col-md-9" style="margin: 0 auto">
+    <app-delete-sw #confirmDeleteSw (outputMessage)="loadAirplane($event)"></app-delete-sw>
+    <div class="card card-default">
+        <div class="card-header separator text-center">
+            <h5><strong>UPLOAD SW</strong></h5>
+        </div>
+        <div class="card-body">
+            
+            <div class="container">
+                <div class="row">
+                    <div style="margin-bottom: 0;" class="d-flex d-flex align-items-center form-group col-md-4">
+                        <br />
+                        <label>Upload XML</label>
+                        <app-simple-file #myFileInput class="m-l-10" [selectedFile]="staticFile" [hideClearButton]="true"
+                            [clearLabelAfterSelect]="true" [isAddFileMechanism]="true" [acceptFileTypes]="'text/xml'"
+                            (myEvent)="handleMyEvent($event)" (change)="onFileChange($event)">
+                        </app-simple-file>
+                        
+                    </div>
+                    <div class="d-flex d-flex align-items-center col-md-2">
+                        <button type="submit" (click)="submit()" class="btn btn-success pull-right btn-sm m-1">
+                            <i class="fa fa-check" aria-hidden="true"></i> SUBMIT
+                        </button>
+                    </div>
+                    <div class="alert alert-warning col-md-5 " style="margin-top: 20px; margin-left:10px;">
+                        <div class="full-width">
+                            <label class="m-b-0">"Only file named 'Flyaway Converted Auth Config TC-XXX' can be
+                                uploaded!"</label>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+          
+
+            <div class="form-group row col-md-12">
+                <div class="col-md-4" *ngFor="let addedFile of staticFile.files" style="margin-bottom: 15px">
+                    <div class="position-relative" style="border: solid 1px #d4d4d4; border-radius: 5px">
+                        <div class="position-relative text-center" style="top: 5px; right: 0">
+                            <p style="font-weight: bold">{{ 'INSERTED' }}</p>
+                        </div>
+                        <div class="col-md-12 padding-0">
+                            <a href="javascript:void(0);" class="btn btn-default full-width" target="_blank">
+                                <p class="p-t-5 p-b-5">
+                                    <i class="fa fa-file-o fa-3x"></i>
+                                </p>
+                                <p class="fs-12 font-montserrat text-uppercase" style="
+                    font-size: 10px !important;
+                    color: lightslategray;
+                    line-height: 14px;
+                  ">
+                                    {{ addedFile.name }}
+                                </p>
+                            </a>
+                        </div>
+                        <div class="position-absolute" style="top: 0; right: 0">
+                            <a href="javascript:void(0);" (click)="deleteAddedFile(addedFile)" class="pull-right"><i
+                                    class="card-icon card-icon-close" style="color: darkred"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-md-12" *ngIf="isTailNumberActive">
+                <div class="col-sm-2 d-flex align-items-center">
+                    <label class="m-b-0">A/C Reg</label>
+                </div>
+
+                <div class="col-sm-8">
+                    <input type="text" id="tailNumber" class="form-control" value="{{ tailNumberValue }}" />
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-secondary text-success" data-toggle="tooltip"
+                        data-placement="top" title="EXCEL Export" (click)="onExcelExport()">
+                        <i class="fa fa-file-excel-o"></i>
+                    </button>
+                </div>
+            </div>
+            <hr />
+            <div class="">
+               
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="card card-default">
+                <div class="card-body">
+                    <app-simple-grid [gridRowData]="gridRowData" [gridStyle]="gridStyle"
+                        [gridColumnDefs]="gridColumnDefs" [gridPageSize]="gridPageSize" [currentMainComponent]="this"
+                        [gridFullSearch]="gridFullSearch" [gridActionButtons]="gridActionButtons"
+                        [rowModelType]="rowModelType">
+                    </app-simple-grid>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+</ngx-spinner>

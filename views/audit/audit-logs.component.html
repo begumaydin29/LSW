@@ -1,0 +1,92 @@
+<pg-container>
+
+  <div class="d-flex justify-content-center">
+    <div class="container-fluid">
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-12">
+          <div class="card card-default">
+            <div class="card-body padding-0 text-center">
+              <h4><strong>History</strong></h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-12">
+          <div class="card card-default">
+            <div class="card-body" style="overflow: visible;">
+              <form [formGroup]="form" #formDir="ngForm">
+                <div class="input-group">
+                  <select (change)='onAuditTypeChange($event)' formControlName="auditType" class="form-control">
+                    <option value="null">--Audit Type--</option>
+                    <option *ngFor="let type of auditTypes" [ngValue]="type.value">
+                      {{type.name}}
+                    </option>
+                  </select>
+                  <div *ngIf="selectedAuditType !=null && selectedAuditType.name !=='Airplane'" class="col-sm-5">
+
+                    <ng-multiselect-dropdown [placeholder]="'--Tail Number--'" [settings]="dropdownSettings_tailNumber"
+                      [data]="allAcReg" (onSelect)="selectACReg($event)" formControlName="tailNumber"
+                      (onSelectAll)="onSelectAllAcReg($event)">
+                    </ng-multiselect-dropdown>
+
+                  </div>
+
+                  <div *ngIf="selectedAuditType !=null && selectedAuditType.name ==='Software'" class="form-control"
+                    style="padding: 0;">
+
+                    <ng-multiselect-dropdown [placeholder]="'Part Number'" [data]="allSwPn"
+                      (onSelect)="selectSwPn($event)" formControlName="SoftwarePnInput" [settings]="dropdownSettings">
+                    </ng-multiselect-dropdown>
+
+                  </div>
+
+                  <div *ngIf="selectedAuditType !=null && selectedAuditType.name ==='Hardware'" class="form-control"
+                    style="padding: 0;">
+
+                    <ng-multiselect-dropdown [placeholder]="'Equipment Key'" [data]="allEquipmentKey"
+                      (onSelect)="selectEquipmentKey($event)" formControlName="HardwareErdInput"
+                      [settings]="dropdownSettings_EqKey">
+                    </ng-multiselect-dropdown>
+
+                  </div>
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="top"
+                      title="Detail Search" (click)="onBtnSearch()">
+                      <i class="fa fa-search"></i>
+                    </button>
+
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button [hidden]="isLoaded" (click)="onBtnReset()" class="btn btn-warning float-right mt-2">
+                      Reset
+                    </button>
+                  </div>
+
+                </div>
+
+              </form>
+            </div>
+          </div>
+
+          <div [hidden]="isLoaded" id="print" class="card card-default">
+            <div class="card-body">
+              <button type="button" class="btn btn-secondary text-success" data-toggle="tooltip" data-placement="top"
+                title="EXCEL Export" (click)="onExcelExport()">
+                <i class="fa fa-file-excel-o"></i>
+              </button>
+              <app-simple-grid [gridStyle]="gridStyle" [gridPageSize]="gridPageSize" [gridFullSearch]="gridFullSearch"
+                [currentMainComponent]="this">
+              </app-simple-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</pg-container>

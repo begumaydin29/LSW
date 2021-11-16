@@ -1,0 +1,160 @@
+<pg-container>
+  <app-add-sl-confirm #confirmAddSl (outputMessage)="setLog($event)">
+  </app-add-sl-confirm>
+  <form [formGroup]="form" #formDir="ngForm" (ngSubmit)="save()">
+    <div class="d-flex justify-content-center">
+      <div class="container-fluid">
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-10">
+            <div class="card card-default">
+              <div class="card-body padding-0 text-center">
+                <h4><strong>ADD Software Location</strong></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-10 validationhw">
+            <div class="card card-default">
+              <div class="card-body">
+                <div class="clear"><br /></div>
+                <div class="col-lg-9" style="margin:0 auto">
+                  <div class="form-group row">
+                    <div class="col-sm-3 d-flex align-items-center">
+                      <label class="m-b-0">A/C Series</label>
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="btn-group dropdown-default" dropdown ngDefaultControl formControlName="acSeries">
+                        <a class="btn dropdown-toggle btn-large" dropdownToggle>B787-9</a>
+                      </div>
+                      <div *dropdownMenu class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" (click)="getSelectedDropdown()" href="javascript:void(0)">B787-9</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-3 d-flex align-items-center">
+                      <label class="m-b-0">A/C Reg</label>
+                    </div>
+                    <div class="col-sm-9">
+
+                      <ng-multiselect-dropdown [placeholder]="'Enter Tail Number e.g. TC-LLC'" [data]="regList"
+                        (onSelect)="selectACReg($event)" (onDeSelect)="acRegRemove($event)" formControlName="acReg"
+                        (onSelectAll)="onSelectAllAcReg($event)" [settings]="dropdownSettings">
+                      </ng-multiselect-dropdown>
+
+                      <!-- <pg-select id="acReg_" style="width: 100%" required [AllowClear]="true" [ShowSearch]="true"
+                        [PlaceHolder]="'Enter Tail Number e.g. TC-LLC'" (SearchChange)="authorizedACRegChanged($event)"
+                        (Remove)="acRegRemove($event)" (OpenChange)="selectACReg($event)" class="" formControlName="acReg"
+                        NotFoundContent="Not Found" [Multiple]="true" [KeepUnListOptions]="true"
+                        tooltip="Enter at least 3 characters" placement="top" show-delay="500" ShowSearch required>
+                        <pg-option *ngFor="let reg of regList" [Label]="reg.TailNumber" [Value]="reg">
+                        </pg-option>
+                      </pg-select> -->
+
+                      <div *ngIf="acReg.invalid && submitted" class="alert alert-danger">
+                        <div *ngIf="acReg.errors.required">A/C Reg is required.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-3">
+                      <label class="m-b-0">SLID</label>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="text" id="slid" class="form-control" formControlName="slid" PlaceHolder="Enter SLID"
+                        required />
+
+                      <div *ngIf="slid.invalid && submitted && isACRegSelected" class="alert alert-danger">
+                        <div *ngIf="slid.errors.required">
+                          SLID is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-md-3">
+                      <label class="m-b-0">SLID Description</label>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="text" id="description" class="form-control" formControlName="description"
+                        PlaceHolder="Enter SL Description" required />
+
+                      <div *ngIf="
+                          description.invalid &&
+                          submitted &&
+                          isACRegSelected
+                        " class="alert alert-danger">
+                        <div *ngIf="description.errors.required">
+                          SLID Description is required.
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="card card-transparent">
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-success pull-right m-1">
+                          <i class="fa fa-check" aria-hidden="true"></i> SAVE
+                        </button>
+
+                        <button type="button" class="btn btn-danger pull-right m-1" (click)="clearAllData()">
+                          <i class="fa fa-times" aria-hidden="true"></i> CLEAR
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <!--ERD&Descriptiom-->
+
+          </div>
+        </div>
+
+
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-10">
+            <div class="card card-default">
+              <div class="card-header separator padding-0 text-center">
+                <h4><strong>Logs</strong></h4>
+              </div>
+              <div class="card-body logs-area">
+                <br />
+                <div class="row">
+                  <div class="col-md-12">
+                    <ng-container *ngFor="let message of saveErrorMessage">
+                      <div *ngIf="message.StatusCode == 1">
+                        <div class="alert alert-success" role="alert">
+                          <p>
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                            <strong>{{ message.Result }} </strong>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div *ngIf="message.StatusCode != 1">
+                        <div class="alert alert-danger" role="alert">
+                          <p>
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                            <strong>{{ message.Result }}</strong>
+                          </p>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</pg-container>

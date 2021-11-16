@@ -1,0 +1,192 @@
+<div class="special-Modal">
+  <div bsModal #edit="bs-modal" class="modal fade disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-S">
+      <div class="modal-content-wrapper">
+        <div class="modal-content">
+          <div class="modal-header clearfix text-left">
+            <button type="button" class="close" (click)="close()" data-dismiss="modal" aria-hidden="true">
+              <i class="pg pg-close fs-14"></i>
+            </button>
+            <div *ngFor="let selected of acRegArrayWCount">
+              <h5 class="text-left p-b-5">
+                <span class="semi-bold">There will be change on </span>{{ selected[1] }} records of {{ selected[0] }}
+              </h5>
+            </div>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="form" class="ng-untouched ng-pristine ng-valid">
+              <div class="form-group row">
+                <div class="col-sm-3  d-flex align-items-center flex-column">
+                  <label class="m-b-0">ERD@HWPN</label>
+                </div>
+                <div class="col-sm-9">
+                  <pg-select id="erd_" style="width: 100%;" required [AllowClear]="true" [ShowSearch]="true"
+                    (OpenChange)="selectErd($event)" (SearchChange)="authorizedERDChanged($event)" class=""
+                    formControlName="erd" NotFoundContent="Not Found" [Multiple]="false" [KeepUnListOptions]="true"
+                    [PlaceHolder]="'Enter ERD@HWPN'" ShowSearch required>
+                    <pg-option *ngFor="let key of keyList" [Label]="key['Value']" [Value]="key['Value']">
+                    </pg-option>
+                  </pg-select>
+
+                  <!-- <ng-select
+                    style="width: 100%;"
+                    bindLabel="name"
+                    placeholder="Enter ERD@HWPN"
+                    class="form-control"
+                    appendTo="body"
+                    (change)="selectErd($event)"
+                    (search)="authorizedERDChanged($event)"
+                    formControlName="erd"
+                  >
+                    <ng-option
+                      *ngFor="let key of keyList"
+                      [value]="key['Value']"
+                      >{{ key["Value"] }}</ng-option
+                    >
+                  </ng-select> -->
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-3  d-flex align-items-center flex-column">
+                  <label class="m-b-0">SLID</label>
+                </div>
+                <div class="col-sm-9">
+                  <pg-select id="erd_" style="width: 100%;" required [AllowClear]="true" [ShowSearch]="true"
+                    (OpenChange)="selectSlId($event)" (SearchChange)="authorizedSlIdChanged($event)" class=""
+                    formControlName="slId" NotFoundContent="Not Found" [Multiple]="false" [KeepUnListOptions]="true"
+                    [PlaceHolder]="'Enter SLID'" ShowSearch required>
+
+
+                    <pg-option *ngFor="let key of slIdList" [Label]="key['Value']" [Value]="key['Value']">
+                    </pg-option>
+
+                  </pg-select>
+                  <!-- <ng-select
+                    style="width: 100%;"
+                    bindLabel="name"
+                    placeholder="Enter SLID"
+                    class="form-control"
+                    appendTo="body"
+                    (change)="selectSlId($event)"
+                    (search)="authorizedSlIdChanged($event)"
+                    formControlName="slId"
+                  >
+                    <ng-option
+                      *ngFor="let slId of slIdList"
+                      [value]="slId['Value']"
+                      >{{ slId["Value"] }}</ng-option
+                    >
+                  </ng-select> -->
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-3  d-flex align-items-center flex-column">
+                  <label class="m-b-0">SW PN</label>
+                </div>
+                <div class="col-sm-9">
+                  <pg-select id="swPn_" style="width: 100%;" required [AllowClear]="true" [ShowSearch]="true"
+                    (OpenChange)="selectSwPn($event)" (SearchChange)="authorizedSwPnChanged($event)" class=""
+                    [KeepUnListOptions]="true" [Multiple]="false" [PlaceHolder]="'Enter Sw Part Number'"
+                    formControlName="swPn" [(ngModel)]="swPnValue" NotFoundContent="Not Found" ShowSearch required>
+
+                    <pg-option *ngFor="let key of swPnList" [Label]="key['Value']" [Value]="key['Value']">
+                    </pg-option>
+                  </pg-select>
+
+                  <!-- <ng-select
+                    style="width: 100%;"
+                    bindLabel="name"
+                    placeholder="Enter Sw Part Number"
+                    class="form-control"
+                    appendTo="body"
+                    (change)="selectSwPn($event)"
+                    (search)="authorizedSwPnChanged($event)"
+                    formControlName="swPn"
+                  >
+                    <ng-option
+                      *ngFor="let swPn of swPnList"
+                      [value]="swPn['Value']"
+                      >{{ swPn["Value"] }}</ng-option
+                    >
+                  </ng-select> -->
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-3  d-flex align-items-center flex-column">
+                  <label class="m-b-0">ATA & SW DESCRIPTION</label>
+                </div>
+                <div class="col-sm-9">
+
+                  <input type="text" id="swDesc" class="form-control" formControlName="swDesc"
+                    value="{{ swDescValue }}" />
+
+                </div>
+              </div>
+
+              <div class="form-group row">
+
+
+                <div class="col-md-3  d-flex align-items-center flex-column">
+                  <label class="m-b-0">EO No</label>
+                </div>
+                <div class="col-sm-3">
+                  <input type="text" id="eoNo" class="form-control" value="{{ eoNoValue }}" readonly />
+                </div>
+
+
+                <div *ngIf="isEoNoExistForSingleSelection || isEoNoSame">
+                  <div class="col-sm-3">
+                    <label class="m-b-0">Status</label>
+                    <div class="col-md-7">
+                      <div class="btn-group dropdown-default" dropdown>
+                        <a class="btn dropdown-toggle btn-large" dropdownToggle>{{ statusValue }}</a>
+                        <div *dropdownMenu class="dropdown-menu" role="menu">
+                          <a class="dropdown-item" (click)="getSelectedDropdown('1')" href="javascript:void(0)">OPEN</a>
+                          <a class="dropdown-item" (click)="getSelectedDropdown('2')"
+                            href="javascript:void(0)">TERMINATED</a>
+                          <a class="dropdown-item" (click)="getSelectedDropdown('3')"
+                            href="javascript:void(0)">PENDING</a>
+                          <a class="dropdown-item" (click)="getSelectedDropdown('4')"
+                            href="javascript:void(0)">REJECTED</a>
+                          <a class="dropdown-item" (click)="getSelectedDropdown('5')"
+                            href="javascript:void(0)">CANCEL</a>
+                          <a class="dropdown-item" (click)="getSelectedDropdown('6')" href="javascript:void(0)">N/A</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="!(isEoNoExistForSingleSelection || isEoNoSame)">
+                  <div class="col-sm-3">
+                    <input type="text" id="status" class="form-control" readonly />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-3  d-flex align-items-center flex-column">
+                  <label class="m-b-0">Remarks</label>
+                </div>
+                <div class="col-sm-9">
+                  <textarea class="form-control" rows="5" formControlName="remarks"></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-danger btn-cons" (click)="editSelected()">
+              <i class="fa fa-floppy-o" aria-hidden="true"></i>
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-edit-confirm #editConfirm></app-edit-confirm>

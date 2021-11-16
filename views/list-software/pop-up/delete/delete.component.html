@@ -1,0 +1,47 @@
+<div class="special-Modal">
+  <div
+    bsModal
+    #deleteSelected="bs-modal"
+    class="modal fade disable-scroll"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="false"
+  >
+    <div class="modal-dialog modal-S">
+      <div class="modal-content-wrapper">
+        <div class="modal-content">
+          <div class="modal-header clearfix text-left">
+            <button
+              type="button"
+              class="close"
+              (click)="close()"
+              data-dismiss="modal"
+              aria-hidden="true"
+            >
+              <i class="pg pg-close fs-14"></i>
+            </button>
+            <div *ngFor="let selected of acRegArrayWCount">
+              <h5 class="text-left p-b-5">
+                <span class="semi-bold"
+                  >{{ selected[1] }} records of {{ selected[0] }} </span
+                >are going to delete, do you approve?
+              </h5>
+            </div>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button class="btn btn-success btn-cons" (click)="deleteYes()">
+              <i class="fa fa-floppy-o" aria-hidden="true"></i>
+              Yes
+            </button>
+
+            <button class="btn btn-danger btn-cons" (click)="deleteNo()">
+              <i class="fa fa-floppy-o" aria-hidden="true"></i>
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

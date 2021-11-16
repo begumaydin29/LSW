@@ -1,0 +1,8 @@
+.modal-dialog {
+    margin: 2px auto;
+    z-index: 1040 !important;
+}
+
+.modal{
+    overflow-y: auto;
+}

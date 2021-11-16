@@ -1,0 +1,33 @@
+<div class="special-Modal">
+  <div bsModal #confirmDeleteSw="bs-modal" class="modal fade disable-scroll" tabindex="-1" role="dialog"
+    aria-hidden="false">
+    <div class="modal-dialog modal-XL">
+      <div class="modal-content-wrapper">
+        <div class="modal-content-wrapper">
+          <div class="modal-content">
+            <div class="modal-header clearfix text-left">
+              <button type="button" class="close" data-dismiss="modal" (click)="close()" aria-hidden="true">
+                <i class="pg pg-close fs-14"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group row col-md-12 d-flex align-items-center">
+                <label class="col-md-10">“All records of {{TailNumber}} will be permanently deleted. Do
+                  you want to continue?
+                </label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-danger btn-cons" (click)="confirmationYes()">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i> YES
+              </button>
+              <button class="btn btn-success btn-cons" (click)="confirmationNo()">
+                <i class="fa fa-window-close-o" aria-hidden="true"></i> NO
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
